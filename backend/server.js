@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const path = require("path");
 dotenv.config();
 
 const studentRoutes = require("./routes/studentRoutes");
@@ -10,9 +10,9 @@ const studentRoutes = require("./routes/studentRoutes");
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("/", (req, res) => {
-  res.json({ message: "Student Management API is running" });
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 app.use("/api/students", studentRoutes);
